@@ -40,11 +40,11 @@ class hireling:
     def addWeapon(self, name, dist, dice, mod, extra=""):
         if mod == "Str":
             bonus = str(self.Str)
-            if self.Str > 0:
+            if self.Str >= 0:
                 bonus = "+" + bonus
         if mod == "Dex":
             bonus = str(self.Dex)
-            if self.Dex > 0:
+            if self.Dex >= 0:
                 bonus = "+" + bonus
         weapon = name +" ("+dist+", "+bonus+" to-hit," +str(dice)+bonus+" damage"+")" 
         if extra != "":
