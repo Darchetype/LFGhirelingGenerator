@@ -1,11 +1,6 @@
 #Nathan Greene 2021
 from random import randint
-import argparse
 
-parser = argparse.ArgumentParser(description = "A hireling generator for Low Fantasy Gaming.")
-parser.add_argument("numChars", type = int, help = "The number of hirelings the program will generate.")
-parser.add_argument("charType", type = str, default = "m", help = "The type of hirelings generated. 'm' for mixed, 'c' for combatants, 'n' for non-combatants")
-args = parser.parse_args()
 
 def rollstats():
     stats = []
@@ -108,22 +103,22 @@ class hireling:
     def addArmor(self, armor):
         self.AC += armor
 
-    def printChar(self):
-        print("Name: ")
-        print("Background: "+self.background)
-        print("")
-        print("Str "+str(self.Strength)+" Dex "+str(self.Dexterity)+" Con "+str(self.Constitution)+" Int "+str(self.Intelligence))
-        print("Perc "+str(self.Perception)+" Will "+str(self.Willpower)+" Cha "+str(self.Charisma)+" Luck: 4")
-        print("")
-        print("Armour Class: "+str(self.AC)+"    Hit Points:" +str(self.hitpoints))
-        print("")
-        print("\033[4mGEAR/NOTES\033[0m")
+    def printChar(self, location):
+        location.write("Name: \n")
+        location.write("Background: "+self.background+"\n")
+        location.write("\n")
+        location.write("Str "+str(self.Strength)+" Dex "+str(self.Dexterity)+" Con "+str(self.Constitution)+" Int "+str(self.Intelligence)+"\n")
+        location.write("Perc "+str(self.Perception)+" Will "+str(self.Willpower)+" Cha "+str(self.Charisma)+" Luck: 4"+"\n")
+        location.write("\n")
+        location.write("Armour Class: "+str(self.AC)+"    Hit Points:" +str(self.hitpoints)+"\n")
+        location.write("\n")
+        location.write("\033[4mGEAR/NOTES\033[0m\n")
         for item in self.gear:
-            print(item)
-        print("")
+            location.write(item+"\n")
+        location.write("\n")
         for item in self.extraInfo:
-            print(item)
-        print("\n\n\n\n")
+            location.write(item+"\n")
+        location.write("\n\n\n\n")
 
 def randomLightArmor():
     armors = ["Heavy Robes", "Hide", "Leather", "Studded Leather"]
@@ -148,7 +143,7 @@ def lbmh(character):
     if random == 3:
         character.addWeapon("Hammer", "Melee", "1d8", "Str", "+1 damage if two-handed, on nat. 19 knock target prone or 10ft back.")
 
-def makeHireling(combatant) :
+def makeHireling(combatant, location) :
     if combatant:
         backgrounds = ["City Watch", "Militia", "Bodyguard", "Pit Fighter", "Soldier", "Thug", "Pirate", "Green Recruit"]
         character = hireling(backgrounds[randint(0,7)])
@@ -414,16 +409,17 @@ def makeHireling(combatant) :
     character.addGear(KnickKnacks[randint(0,len(KnickKnacks)-1)])
     character.addGear(KnickKnacks[randint(0,len(KnickKnacks)-1)])
 
-    character.printChar()
+    character.printChar(location)
 
-for i in range(args.numChars):
-    if args.charType == "m" :
-        if randint(0,1) == 1:
-            makeHireling(True)
-        else:
-            makeHireling(False)
-    if args.charType == "c" :
-        makeHireling(True)
-    if args.charType == "n" :
-        makeHireling(False)
+def generateBatch(charType, numChars, location):
+    for i in range(numChars):
+        if charType == "m" :
+            if randint(0,1) == 1:
+                makeHireling(True, location)
+            else:
+                makeHireling(False, location)
+        if charType == "c" :
+            makeHireling(True, location)
+        if charType == "n" :
+            makeHireling(False, location)
 
