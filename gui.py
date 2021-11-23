@@ -42,6 +42,7 @@ def makeChars():
         batchSize = int(str(hirelingNum.get()))
     except:
         messagebox.showinfo("Input Error", "Type an actual number for the batch size, wise guy.")
+        return
     try:
         pathstring = os.path.join(pathstring, "output.txt")
         location = open(pathstring, "w")

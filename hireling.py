@@ -112,7 +112,8 @@ class hireling:
         location.write("\n")
         location.write("Armour Class: "+str(self.AC)+"    Hit Points:" +str(self.hitpoints)+"\n")
         location.write("\n")
-        location.write("\033[4mGEAR/NOTES\033[0m\n")
+        location.write("GEAR/NOTES\n")
+        location.write("----------\n")
         for item in self.gear:
             location.write(item+"\n")
         location.write("\n")
