@@ -123,15 +123,15 @@ class hireling:
 
 def randomLightArmor():
     armors = ["Heavy Robes", "Hide", "Leather", "Studded Leather"]
-    return armors[randint(0,3)]
+    return armors[randint(0,3)]+" (+1 AC)"
 
 def randomMediumArmor():
     armors = ["Chain Shirt", "Scale Shirt", "Breastplate", "Bone Armor", "Reinforced Hide", "Monster Chitin Armor"]
-    return armors[randint(0,5)]
+    return armors[randint(0,5)]+" (+3 AC)"
 
 def randomHeavyArmor():
     armors = ["Plate Mail", "Splint Armor", "Chain Mail", "Ring Mail"]
-    return armors[randint(0,3)]
+    return armors[randint(0,3)]+" (+5 AC)"
 
 def lbmh(character):
     random = randint(0,3)
@@ -180,7 +180,7 @@ def makeHireling(combatant, location) :
             character.setInt()
             character.setPerc()
             character.addArmor(2)
-            character.addGear("Shield")
+            character.addGear("Shield (+1 AC)")
             character.addGear(randomLightArmor())
             character.addWeapon("Spear", "10ft", "1d6+1", "Str", "+1 damage if used two handed, may be thrown 50ft.")
         if gear == 4:
@@ -204,7 +204,7 @@ def makeHireling(combatant, location) :
             character.setPerc()
             character.addArmor(4)
             character.addGear(randomMediumArmor())
-            character.addGear("Shield")
+            character.addGear("Shield (+1 AC)")
             character.addWeapon("Shortsword", "Melee", "1d6", "Str", "Disarm on nat 19. +2 to Init. Checks")
             character.addWeapon("3 Light Axes", "25ft", "1d6", "Dex", "Thrown. On nat. 19, target gains an injury")
         if gear == 6:
@@ -229,7 +229,7 @@ def makeHireling(combatant, location) :
             character.setWill()
             character.addArmor(4)
             character.addGear(randomMediumArmor())
-            character.addGear("Shield")
+            character.addGear("Shield (+1 AC)")
             lbmh(character)
         if gear == 8:
             character.setCon()
@@ -296,7 +296,7 @@ def makeHireling(combatant, location) :
             character.setInt()
             character.addArmor(6)
             character.addGear(randomHeavyArmor())
-            character.addGear("Shield")
+            character.addGear("Shield (+1 AC)")
             lbmh(character)
     else:
         backgrounds = {
