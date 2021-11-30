@@ -103,8 +103,8 @@ class hireling:
     def addArmor(self, armor):
         self.AC += armor
 
-    def printChar(self, location):
-        location.write("Name: \n")
+    def printChar(self, location, name):
+        location.write("Name: "+name+"\n")
         location.write("Background: "+self.background+"\n")
         location.write("\n")
         location.write("Str "+str(self.Strength)+" Dex "+str(self.Dexterity)+" Con "+str(self.Constitution)+" Int "+str(self.Intelligence)+"\n")
@@ -144,7 +144,23 @@ def lbmh(character):
     if random == 3:
         character.addWeapon("Hammer", "Melee", "1d8", "Str", "+1 damage if two-handed, on nat. 19 knock target prone or 10ft back.")
 
-def makeHireling(combatant, location) :
+def midlander_name():
+    names = ["Aldred", "Hammond", "Gregor", "Willem", "Harding", "Emory", "Shand", "Bennett", "Warner", "Fenton", "Morris", "Lothar", "Dirk", "Justen", "Ogden", "Yorric", "Ethan", "Horrett", "Grindle", "Theobald", "Odessa", "Cassey", "Isolde", "Lucia", "Marcella", "Kendra", "Felicia", "Edith", "Annorah", "Janess", "Talia", "Celene", "Sara", "Maegen", "Dawn", "Estelle", "Nyssa", "Magda", "Isabelle", "Lorna"]
+    return(names[randint(0,len(names)-1)])
+
+def karok_name():
+    names = ["Mateo", "Baltasar", "Lucon", "Escobar", "Cristoval", "Gavriel", "Pascal", "Ramiro", "Monferriz", "Inigo", "Tomon", "Salazar", "Gascon", "Vasquez", "Avaro", "Vicente", "Anselmo", "Eltor", "Rachiro", "Gomez" ,"Cataline", "Mari", "Oalla", "Juana", "Crusina", "Francia", "Teresa", "Serena", "Elvira", "Aldona", "Innes", "Ysabel", "Felipa", "Blanca", "Antonia", "Mercia", "Madele", "Elena", "Marcietta", "Luzia"]
+    return(names[randint(0,len(names)-1)])
+
+def nydissian_name():
+    names = ["Decimus", "Mithrides", "Trovex", "Norcil", "Lucius", "Sercanis", "Ortuvo", "Titus", "Prytanis", "Gaius", "Varros", "Serjax", "Nicandes", "Mallius", "Barbulo", "Crassus", "Kapula", "Terro", "Carnifex", "Anticus", "Lucidia", "Soosi", "Septana", "Tibori", "Rox", "Galera", "Antine", "Sevira", "Cerix", "Theodora", "Quinte", "Marcella", "Avius", "Maesaris", "Kali", "Octavia", "Dorni", "Vexonae", "Balba", "Druisa"]
+    return(names[randint(0, len(names)-1)])
+
+def varnori_name():
+    names = ["Gunthar", "Arnjin", "Njord", "Holgrim", "Eldrik", "Seigmar", "Brunjur", "Ulfric", "Vorn", "Svannor", "Finnvar", "Borgov", "Karlviir", "Steiner", "Vignaal", "Ragnar", "Noordac", "Magnus", "Eldavaar", "Farviir", "Freya", "Salieff", "Ulfina", "Ingie", "Dyra", "Halasti", "Sighilda", "Gutha", "Kelbi", "Frithora", "Kolli", "Farrjor", "Holatha", "Yiris", "Ogarra", "Dyrri", "Bayora", "Vissu", "Gulthena", "Arna"]
+    return(names[randint(0, len(names)-1)])
+
+def makeHireling(combatant, location, name) :
     if combatant:
         backgrounds = ["City Watch", "Militia", "Bodyguard", "Pit Fighter", "Soldier", "Thug", "Pirate", "Green Recruit"]
         character = hireling(backgrounds[randint(0,7)])
@@ -241,7 +257,7 @@ def makeHireling(combatant, location) :
             character.setInt()
             character.addArmor(3)
             character.addGear(randomMediumArmor())
-            polearms = ["Glaive", "Halberd", "Falchion", "Guisame", "Naginata"]
+            polearms = ["Glaive", "Halberd", "Falchion", "Guisarme", "Naginata"]
             polearm = polearms[randint(0,4)]
             character.addWeapon(polearm, "10ft", "1d10", "Str", "Two-handed. Suffers disadvantage in cramped quarters.")
         if gear == 9:
@@ -410,17 +426,38 @@ def makeHireling(combatant, location) :
     character.addGear(KnickKnacks[randint(0,len(KnickKnacks)-1)])
     character.addGear(KnickKnacks[randint(0,len(KnickKnacks)-1)])
 
-    character.printChar(location)
+    character.printChar(location, name)
 
-def generateBatch(charType, numChars, location):
+def generateBatch(charType, numChars, location, culture):
     for i in range(numChars):
+
+        char_name = ""
+        if culture == "m" :
+            char_name = midlander_name()
+        if culture == "k" :
+            char_name = karok_name()
+        if culture == "n" :
+            char_name = nydissian_name()
+        if culture == "v" :
+            char_name = varnori_name()
+        if culture == "r" :
+            random_culture = randint(0,3)
+            if random_culture == 0:
+                char_name = midlander_name()
+            if random_culture == 1:
+                char_name = karok_name()
+            if random_culture == 2:
+                char_name = nydissian_name()
+            if random_culture == 3:
+                char_name = varnori_name()
+
         if charType == "m" :
             if randint(0,1) == 1:
-                makeHireling(True, location)
+                makeHireling(True, location, char_name)
             else:
-                makeHireling(False, location)
+                makeHireling(False, location, char_name)
         if charType == "c" :
-            makeHireling(True, location)
+            makeHireling(True, location, char_name)
         if charType == "n" :
-            makeHireling(False, location)
+            makeHireling(False, location, char_name)
 
